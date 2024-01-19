@@ -3,6 +3,12 @@
 
 #define SYMBOL_COUNT 1024
 
+struct FreqNode
+{
+    char symbol;
+    int frequency;
+};
+
 void
 count_freq(const char* input, int* frequency)
 {
@@ -20,6 +26,8 @@ main()
 {
     const char* input = "This is some kind of input with some redudancies I guess you know man, like, seee.";
 
+    struct FreqNode l_freq[] = {};
+
     int frequency[SYMBOL_COUNT];
 
     count_freq(input, frequency);
@@ -28,8 +36,11 @@ main()
     {
         if(frequency[i] > 0)
         {
-            printf("Symbol '%c' has frequency: %d\n", (char)i, frequency[i]);
+            l_freq[i].symbol = i;
+            l_freq[i].frequency = frequency[i];
+            //printf("Symbol '%c' has frequency: %d\n", (char)i, frequency[i]);
         }
+        //printf("Symbol '%c' has frequency: %d\n", l_freq.symbol[i], frequency[i]);
    }
 
     return 0;
