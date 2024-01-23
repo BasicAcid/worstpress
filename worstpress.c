@@ -27,8 +27,8 @@ void min_heapify(int arr[], int n, int i)
 {
     int smallest = i;
 
-    int left_child = 2 * i + 1;
-    int right_child = 2 * i + 2;
+    int left_child = (i * 2) + 1;
+    int right_child =  (i * 2) + 2;
 
     // If left child is smaller than root.
     if(left_child < n && arr[left_child] < arr[smallest])
