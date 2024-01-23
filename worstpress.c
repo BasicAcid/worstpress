@@ -57,7 +57,7 @@ void min_heapify(int arr[], int n, int i)
 int
 main()
 {
-    const char* input = "This is some kind of input with some redudancies I guess you know man, like, seee.";
+    const char *input = "This is some kind of input with some redudancies I guess you know man, like, seee.";
 
     struct FreqNode l_freq[] = {};
 
@@ -71,9 +71,19 @@ main()
         {
             l_freq[i].symbol = i;
             l_freq[i].frequency = frequency[i];
-            printf("Symbol '%c' has frequency: %d\n", (char)i, frequency[i]);
+            //printf("Symbol '%c' has frequency: %d\n", (char)i, frequency[i]);
         }
-   }
+    }
+
+    int test[] = {4,3,9,0,43,2,54,9};
+
+    min_heapify(test, 0, 0);
+
+    for(int i = 0; i < 8; i++)
+    {
+        printf("%d\n", test[i]);
+    }
+
 
     return 0;
 }
