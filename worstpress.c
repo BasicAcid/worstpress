@@ -2,59 +2,81 @@
 #include <string.h>
 #include <stdlib.h>
 
-struct IntArray
-{
-    unsigned int *data;
-    size_t size;
-};
-
-struct IntArray
-create_dynamic_array(size_t size)
-{
-    struct IntArray arr;
-    arr.data = malloc(size * sizeof(arr));
-    arr.size = size;
-    return arr;
-}
-
 struct FreqNode
 {
     char symbol;
     int frequency;
-    struct FreqNode *left;
-    struct FreqNode *right;
 };
 
-struct IntArray
-count_freq(const char *input)
+struct FreqNode
+*calculateFrequency(const char* input_string, int* table_size)
 {
-    struct IntArray freq_arr = create_dynamic_array(100);
+    struct FreqNode* frequency_table = NULL;
 
-    while(*input != '\0')
+    if(input_string == NULL)
+        return frequency_table;
+
+    int char_count = 0;
+    for(int i = 0; input_string[i] != '\0'; ++i)
+        char_count++;
+
+    frequency_table = malloc(char_count * sizeof(struct FreqNode));
+
+    // Initialize the frequency table with unique characters and set frequencies to zero.
+    int table_index = 0;
+    for(int i = 0; input_string[i] != '\0'; ++i)
     {
-        freq_arr.data[ (unsigned char)*input ]++;
-        input++;
+        // Check if the character is already in the frequency table.
+        int found = 0;
+        for(int j = 0; j < table_index; ++j)
+        {
+            if(frequency_table[j].symbol == input_string[i])
+            {
+                found = 1;
+                break;
+            }
+        }
+
+        // If not found, add it to the frequency table.
+        if(!found)
+        {
+            frequency_table[table_index].symbol = input_string[i];
+            frequency_table[table_index].frequency = 1;
+            table_index++;
+        }
+        else
+        {
+            // If found, increment the frequency.
+            for(int j = 0; j < table_index; ++j)
+            {
+                if(frequency_table[j].symbol == input_string[i])
+                {
+                    frequency_table[j].frequency++;
+                    break;
+                }
+            }
+        }
     }
-    return freq_arr;
+
+    *table_size = table_index;
+
+    return frequency_table;
 }
 
-void
-print_dynamic_array(struct IntArray arr)
-{
-    for(size_t i = 0; i < arr.size; i++)
-        printf("%f\n", arr.data[i]);
-}
 
 int
-main()
+main(void)
 {
-    //const char *input = "This is some kind of input with some redudancies I guess you know man, like, seee.";
+    const char* input_string = "This is some kind of input with some redudancies I guess you know man, like, seee.";
 
-    const char *input = "hello";
+    int table_size;
 
-    struct IntArray better_freqs = count_freq(input);
+    struct FreqNode* result_table = calculateFrequency(input_string, &table_size);
 
-    print_dynamic_array(better_freqs);
+    for(int i = 0; i < table_size; ++i)
+        printf("%c: %d\n", result_table[i].symbol, result_table[i].frequency);
+
+    free(result_table);
 
     return 0;
 }
