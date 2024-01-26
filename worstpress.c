@@ -8,6 +8,24 @@ struct FreqNode
     int frequency;
 };
 
+// TODO: integrate this into FreqNode.
+struct HuffmanNode
+{
+    char symbol;
+    int frequency;
+    struct HuffmanNode *left;
+    struct HuffmanNode *right;
+};
+
+struct HuffmanNode* create_huffman_node(char symbol, int frequency)
+{
+    struct HuffmanNode* new_node = malloc(sizeof(struct HuffmanNode));
+    new_node->symbol = symbol;
+    new_node->frequency = frequency;
+    new_node->left = new_node->right = NULL;
+    return new_node;
+}
+
 struct FreqNode
 *calculateFrequency(const char* input_string, int* table_size)
 {
